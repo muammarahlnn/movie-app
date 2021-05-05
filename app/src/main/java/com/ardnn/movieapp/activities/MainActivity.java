@@ -14,6 +14,7 @@ import com.ardnn.movieapp.R;
 import com.ardnn.movieapp.fragments.MovieFragment;
 import com.ardnn.movieapp.fragments.ProfileFragment;
 import com.ardnn.movieapp.fragments.TvShowFragment;
+import com.ardnn.movieapp.utils.Util;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.HashMap;
@@ -27,17 +28,16 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     // attributes
     public static final String EXTRA_STRING = "extra_string";
     private Map<Integer, Fragment> fragmentMap;
+    private boolean isFirstLaunch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // initialize widgets
+        // initialization
         bnvMain = findViewById(R.id.bnv_main);
         fragmentMap = new HashMap<>();
-
-        // change action bar's text color
     }
 
     @Override
@@ -53,16 +53,16 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         bnvMain.setSelectedItemId(R.id.menu_item_movie);
 
         // change action bar's title color
-        changeActionBarTitle(MovieFragment.newInstance().getArguments().getString(EXTRA_STRING));
+        Util.changeActionBarTitle(this, MovieFragment.newInstance().getArguments().getString(EXTRA_STRING));
     }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         Fragment fragment = fragmentMap.get(item.getItemId());
         if (fragment != null) {
-            assert fragment.getArguments() != null;
+            assert fragment.getArguments() != null || getActionBar() != null : "Null Pointer Exception oi!";
             String titleActionBar = fragment.getArguments().getString(EXTRA_STRING);
-            changeActionBarTitle(titleActionBar);
+            Util.changeActionBarTitle(this, titleActionBar);
 
             getSupportFragmentManager()
                     .beginTransaction()
@@ -70,9 +70,5 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                     .commit();
         }
         return true;
-    }
-
-    private void changeActionBarTitle(String title) {
-        getSupportActionBar().setTitle((Html.fromHtml("<font color=\"#F3CE13\">" + title + "</font>")));
     }
 }
