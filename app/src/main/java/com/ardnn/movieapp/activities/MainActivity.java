@@ -21,14 +21,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
+    // extras
+    public static final String EXTRA_STRING = "extra_string";
 
     // widgets
     private BottomNavigationView bnvMain;
 
     // attributes
-    public static final String EXTRA_STRING = "extra_string";
     private Map<Integer, Fragment> fragmentMap;
-    private boolean isFirstLaunch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

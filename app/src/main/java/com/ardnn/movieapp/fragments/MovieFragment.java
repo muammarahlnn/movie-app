@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.ardnn.movieapp.R;
@@ -30,8 +31,13 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class MovieFragment extends Fragment implements NowPlayingAdapter.OnItemClick {
-    private RecyclerView rvMovies;
+    // classes
     private NowPlayingAdapter nowPlayingAdapter;
+
+    // widgets
+    private RecyclerView rvMovies;
+
+    // attributes
     private List<NowPlaying> nowPlayings;
 
     public static MovieFragment newInstance() {
@@ -48,8 +54,13 @@ public class MovieFragment extends Fragment implements NowPlayingAdapter.OnItemC
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_movie, container, false);
+
+        // initialize widgets
         rvMovies = view.findViewById(R.id.rv_movies);
+
+        // set recyclerview layout
         rvMovies.setLayoutManager(new GridLayoutManager(getActivity(), 3));
+
         loadData();
         return view;
     }
@@ -63,6 +74,7 @@ public class MovieFragment extends Fragment implements NowPlayingAdapter.OnItemC
             @Override
             public void onResponse(Call<NowPlayingResponse> call, Response<NowPlayingResponse> response) {
                 if (response.isSuccessful() && response.body().getNowPlayings() != null) {
+                    // set the now playing's data to list and put it to recyclerview
                     nowPlayings = response.body().getNowPlayings();
                     nowPlayingAdapter = new NowPlayingAdapter(nowPlayings, MovieFragment.this);
                     rvMovies.setAdapter(nowPlayingAdapter);
@@ -81,11 +93,14 @@ public class MovieFragment extends Fragment implements NowPlayingAdapter.OnItemC
     @Override
     public void onClick(int position) {
         Intent goToDetail = new Intent(getActivity(), DetailActivity.class);
+
+        // put all now playing's data to intent
         goToDetail.putExtra(DetailActivity.EXTRA_TITLE, nowPlayings.get(position).getTitle());
         goToDetail.putExtra(DetailActivity.EXTRA_SYNOPSIS, nowPlayings.get(position).getSynopsis());
         goToDetail.putExtra(DetailActivity.EXTRA_IMAGE_URL, nowPlayings.get(position).getImageUrl());
         goToDetail.putExtra(DetailActivity.EXTRA_RELEASE_DATE, nowPlayings.get(position).getReleaseDate());
         goToDetail.putExtra(DetailActivity.EXTRA_VOTE, nowPlayings.get(position).getVote());
+
         startActivity(goToDetail);
 
     }

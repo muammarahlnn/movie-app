@@ -29,8 +29,13 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class TvShowFragment extends Fragment implements AiringTodayAdapter.OnItemClick {
-    private RecyclerView rvTvShows;
+    // classes
     private AiringTodayAdapter airingTodayAdapter;
+
+    // widgets
+    private RecyclerView rvTvShows;
+
+    // attributes
     private List<AiringToday> airingTodayList;
 
     public static TvShowFragment newInstance() {
@@ -47,10 +52,14 @@ public class TvShowFragment extends Fragment implements AiringTodayAdapter.OnIte
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_tv_show, container, false);
-        rvTvShows = view.findViewById(R.id.rv_tv_shows);
-        rvTvShows.setLayoutManager(new GridLayoutManager(getActivity(), 3));
-        loadData();
 
+        // initialize widgets
+        rvTvShows = view.findViewById(R.id.rv_tv_shows);
+
+        // set recyclerview layout
+        rvTvShows.setLayoutManager(new GridLayoutManager(getActivity(), 3));
+
+        loadData();
         return view;
     }
 
@@ -62,6 +71,7 @@ public class TvShowFragment extends Fragment implements AiringTodayAdapter.OnIte
         airingTodayResponseCall.enqueue(new Callback<AiringTodayResponse>() {
             @Override
             public void onResponse(Call<AiringTodayResponse> call, Response<AiringTodayResponse> response) {
+                // set the airing today's data to list and put it to recyclerview
                 if (response.isSuccessful() && response.body().getAiringTodayList() != null) {
                     airingTodayList = response.body().getAiringTodayList();
                     airingTodayAdapter = new AiringTodayAdapter(airingTodayList, TvShowFragment.this);
@@ -81,11 +91,14 @@ public class TvShowFragment extends Fragment implements AiringTodayAdapter.OnIte
     @Override
     public void onclick(int position) {
         Intent goToDetail = new Intent(getActivity(), DetailActivity.class);
+
+        // put all airing today's data to intent
         goToDetail.putExtra(DetailActivity.EXTRA_TITLE, airingTodayList.get(position).getTitle());
         goToDetail.putExtra(DetailActivity.EXTRA_SYNOPSIS, airingTodayList.get(position).getSynopsis());
         goToDetail.putExtra(DetailActivity.EXTRA_IMAGE_URL, airingTodayList.get(position).getImageUrl());
         goToDetail.putExtra(DetailActivity.EXTRA_RELEASE_DATE, airingTodayList.get(position).getFirstAiring());
         goToDetail.putExtra(DetailActivity.EXTRA_VOTE, airingTodayList.get(position).getVote());
+
         startActivity(goToDetail);
     }
 }
