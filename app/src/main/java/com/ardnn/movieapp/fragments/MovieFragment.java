@@ -94,12 +94,13 @@ public class MovieFragment extends Fragment implements NowPlayingAdapter.OnItemC
     public void onClick(int position) {
         Intent goToDetail = new Intent(getActivity(), DetailActivity.class);
 
-        // put all now playing's data to intent
-        goToDetail.putExtra(DetailActivity.EXTRA_TITLE, nowPlayings.get(position).getTitle());
-        goToDetail.putExtra(DetailActivity.EXTRA_SYNOPSIS, nowPlayings.get(position).getSynopsis());
-        goToDetail.putExtra(DetailActivity.EXTRA_IMAGE_URL, nowPlayings.get(position).getImageUrl());
-        goToDetail.putExtra(DetailActivity.EXTRA_RELEASE_DATE, nowPlayings.get(position).getReleaseDate());
-        goToDetail.putExtra(DetailActivity.EXTRA_VOTE, nowPlayings.get(position).getVote());
+        // put now playing' object to intent
+        goToDetail.putExtra(DetailActivity.EXTRA_MOVIE, nowPlayings.get(position));
+//        goToDetail.putExtra(DetailActivity.EXTRA_TITLE, nowPlayings.get(position).getTitle());
+//        goToDetail.putExtra(DetailActivity.EXTRA_SYNOPSIS, nowPlayings.get(position).getSynopsis());
+//        goToDetail.putExtra(DetailActivity.EXTRA_IMAGE_URL, nowPlayings.get(position).getImageUrl());
+//        goToDetail.putExtra(DetailActivity.EXTRA_RELEASE_DATE, nowPlayings.get(position).getReleaseDate());
+//        goToDetail.putExtra(DetailActivity.EXTRA_VOTE, nowPlayings.get(position).getVote());
 
         startActivity(goToDetail);
 

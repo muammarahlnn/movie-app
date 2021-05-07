@@ -92,13 +92,8 @@ public class TvShowFragment extends Fragment implements AiringTodayAdapter.OnIte
     public void onclick(int position) {
         Intent goToDetail = new Intent(getActivity(), DetailActivity.class);
 
-        // put all airing today's data to intent
-        goToDetail.putExtra(DetailActivity.EXTRA_TITLE, airingTodayList.get(position).getTitle());
-        goToDetail.putExtra(DetailActivity.EXTRA_SYNOPSIS, airingTodayList.get(position).getSynopsis());
-        goToDetail.putExtra(DetailActivity.EXTRA_IMAGE_URL, airingTodayList.get(position).getImageUrl());
-        goToDetail.putExtra(DetailActivity.EXTRA_RELEASE_DATE, airingTodayList.get(position).getFirstAiring());
-        goToDetail.putExtra(DetailActivity.EXTRA_VOTE, airingTodayList.get(position).getVote());
-
+        // put airing today's objects to intent
+        goToDetail.putExtra(DetailActivity.EXTRA_MOVIE, airingTodayList.get(position));
         startActivity(goToDetail);
     }
 }

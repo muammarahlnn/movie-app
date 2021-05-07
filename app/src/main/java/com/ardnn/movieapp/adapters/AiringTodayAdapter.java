@@ -40,9 +40,9 @@ public class AiringTodayAdapter extends RecyclerView.Adapter<AiringTodayAdapter.
                 .load(Const.IMG_URL_200 + airingTodayList.get(position).getImageUrl())
                 .into(holder.ivPoster);
 
-        holder.tvTitle.setText(airingTodayList.get(position).getTitle());
+        holder.tvTitle.setText(airingTodayList.get(position).getName());
         holder.tvVote.setText(String.valueOf(airingTodayList.get(position).getVote()));
-        holder.tvFirstAiring.setText(airingTodayList.get(position).getFirstAiring().substring(0, 4));
+        holder.tvFirstAiring.setText(airingTodayList.get(position).getReleaseDate().substring(0, 4));
     }
 
     @Override

@@ -7,6 +7,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ardnn.movieapp.R;
+import com.ardnn.movieapp.models.AiringToday;
+import com.ardnn.movieapp.models.Movie;
 import com.ardnn.movieapp.networks.Const;
 import com.ardnn.movieapp.utils.Util;
 import com.bumptech.glide.Glide;
@@ -18,6 +20,7 @@ public class DetailActivity extends AppCompatActivity {
     public static final String EXTRA_IMAGE_URL = "extra_image_url";
     public static final String EXTRA_RELEASE_DATE = "extra_release_date";
     public static final String EXTRA_VOTE = "extra_vote";
+    public static final String EXTRA_MOVIE = "extra_movie";
 
     // widgets
     ImageView ivPoster;
@@ -27,7 +30,6 @@ public class DetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
-
         // initialize widgets
         ivPoster = findViewById(R.id.iv_poster_detail);
         tvTitle = findViewById(R.id.tv_title_detail);
@@ -41,11 +43,12 @@ public class DetailActivity extends AppCompatActivity {
 
     private void setMovieData() {
         // get data from previous intent
-        String title = getIntent().getStringExtra(EXTRA_TITLE);
-        String synopsis = getIntent().getStringExtra(EXTRA_SYNOPSIS);
-        String imageUrl = getIntent().getStringExtra(EXTRA_IMAGE_URL);
-        String releaseDate = Util.convertToDate(getIntent().getStringExtra(EXTRA_RELEASE_DATE));
-        double vote = getIntent().getDoubleExtra(EXTRA_VOTE, 0);
+        Movie movie = getIntent().getParcelableExtra(EXTRA_MOVIE);
+        String title = movie.getName();
+        String synopsis = movie.getSynopsis();
+        String imageUrl = movie.getImageUrl();
+        String releaseDate = Util.convertToDate(movie.getReleaseDate());
+        double vote = movie.getVote();
 
         // set to widgets
         tvTitle.setText(title);

@@ -40,7 +40,7 @@ public class NowPlayingAdapter extends RecyclerView.Adapter<NowPlayingAdapter.Vi
                 .load(Const.IMG_URL_200 + nowPlayings.get(position).getImageUrl())
                 .into(holder.ivPoster);
 
-        holder.tvTitle.setText(nowPlayings.get(position).getTitle());
+        holder.tvTitle.setText(nowPlayings.get(position).getName());
         holder.tvVote.setText(String.valueOf(nowPlayings.get(position).getVote()));
         holder.tvYearReleased.setText(nowPlayings.get(position).getReleaseDate().substring(0, 4));
     }

@@ -1,61 +1,72 @@
 package com.ardnn.movieapp.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
 
-public class NowPlaying {
+public class NowPlaying extends Movie implements Parcelable {
     @SerializedName("title")
     private String title;
 
     @SerializedName("release_date")
     private String releaseDate;
 
-    @SerializedName("overview")
-    private String synopsis;
+    // parcelable methods ---------------------------------------------
 
-    @SerializedName("poster_path")
-    private String imageUrl;
+    protected NowPlaying(Parcel in) {
+        title = in.readString();
+        releaseDate = in.readString();
+        synopsis = in.readString();
+        imageUrl = in.readString();
+        vote = in.readDouble();
+    }
 
-    @SerializedName("vote_average")
-    private double vote;
+    public static final Creator<NowPlaying> CREATOR = new Creator<NowPlaying>() {
+        @Override
+        public NowPlaying createFromParcel(Parcel in) {
+            return new NowPlaying(in);
+        }
 
-    // getter and setter ------------------------------------
-    public String getTitle() {
+        @Override
+        public NowPlaying[] newArray(int size) {
+            return new NowPlaying[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(title);
+        dest.writeString(releaseDate);
+        dest.writeString(synopsis);
+        dest.writeString(imageUrl);
+        dest.writeDouble(vote);
+    }
+
+    // getter and setter ----------------------------------------
+    @Override
+    public String getName() {
         return title;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    @Override
+    public void setName(String name) {
+        this.title = name;
     }
 
+    @Override
     public String getReleaseDate() {
         return releaseDate;
     }
 
-    public void setReleaseDate(String releaseDate) {
-        this.releaseDate = releaseDate;
+    @Override
+    public void setReleaseDate(String date) {
+        releaseDate = date;
     }
 
-    public String getSynopsis() {
-        return synopsis;
-    }
-
-    public void setSynopsis(String synopsis) {
-        this.synopsis = synopsis;
-    }
-
-    public String getImageUrl() {
-        return imageUrl;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
-    }
-
-    public double getVote() {
-        return vote;
-    }
-
-    public void setVote(double vote) {
-        this.vote = vote;
-    }
 }
